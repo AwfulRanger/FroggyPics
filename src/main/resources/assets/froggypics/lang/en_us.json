@@ -1,0 +1,22 @@
+{
+	
+	"gui.froggypics.upload" : "Upload",
+	"gui.froggypics.imagepath" : "Image path",
+	"gui.froggypics.openpath" : "Open path",
+	"gui.froggypics.ok" : "OK",
+	"gui.froggypics.invalidimage" : "Invalid image",
+	"gui.froggypics.imagereadfail" : "Couldn't read image",
+	"gui.froggypics.imagetoolarge" : "Image too large",
+	"gui.froggypics.invaliddim" : "Invalid dimensions",
+	"gui.froggypics.pic" : "Picture",
+	"gui.froggypics.uparrow" : "▲",
+	"gui.froggypics.downarrow" : "▼",
+	"gui.froggypics.leftarrow" : "◀",
+	"gui.froggypics.rightarrow" : "▶",
+	"gui.froggypics.apply" : "Apply",
+	"gui.froggypics.reset" : "Reset",
+	
+	"item.froggypics.empty_pic" : "Empty Picture",
+	"item.froggypics.pic" : "Picture"
+	
+}

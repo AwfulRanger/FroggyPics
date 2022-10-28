@@ -1,0 +1,33 @@
+{
+	
+	"schemaVersion" : 1,
+	"id" : "froggypics",
+	"version" : "${version}",
+	
+	"name" : "FroggyPics",
+	"description" : "Adds picture frames for players to upload images into",
+	"authors" : [ "AwfulRanger" ],
+	"contact" : { "sources" : "https://github.com/AwfulRanger/FroggyPics" },
+	
+	"license" : "MIT",
+	"icon" : "assets/froggypics/icon.png",
+	
+	"environment" : "*",
+	"entrypoints" : {
+		
+		"main" : [ "frog.awfulranger.froggypics.shared.FroggyPics" ],
+		"client" : [ "frog.awfulranger.froggypics.client.FroggyPicsClient" ]
+		
+	},
+	"mixins" : [],
+	
+	"depends" : {
+		
+		"fabricloader" : ">=0.11.3",
+		"fabric" : "*",
+		"minecraft" : ">=1.17.1",
+		"java" : ">=16"
+		
+	}
+	
+}

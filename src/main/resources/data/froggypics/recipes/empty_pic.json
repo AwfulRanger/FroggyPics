@@ -1,0 +1,24 @@
+{
+	
+	"type" : "minecraft:crafting_shaped",
+	"pattern" : [
+		
+		"PPP",
+		"PLP",
+		"PPP"
+		
+	],
+	"key" : {
+		
+		"L" : { "item" : "minecraft:lily_pad" },
+		"P" : { "item" : "minecraft:paper" }
+		
+	},
+	"result" : {
+		
+		"item" : "froggypics:empty_pic",
+		"count" : 8
+		
+	}
+	
+}
