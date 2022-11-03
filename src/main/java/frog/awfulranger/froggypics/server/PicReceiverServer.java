@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -12,12 +13,15 @@ import javax.imageio.stream.MemoryCacheImageInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Stack;
 
 
 
 public class PicReceiverServer {
 	
 	protected HashMap< ServerPlayerEntity, byte[] > uploading = new HashMap<>();
+	protected HashMap< ServerPlayerEntity, Stack< byte[] > > requesting = new HashMap<>();
 	
 	public PicReceiverServer() {}
 	
@@ -125,15 +129,11 @@ public class PicReceiverServer {
 			byte[] hash = new byte[ 32 ];
 			buf.readBytes( hash );
 			server.execute( () -> {
-			
-				byte[] pic = FroggyPics.storageServer.getPic( hash, server );
-				if ( pic == null ) { return; }
 				
-				PacketByteBuf sendBuf = PacketByteBufs.create();
-				sendBuf.writeBytes( hash );
-				sendBuf.writeByteArray( pic );
-				ServerPlayNetworking.send( player, FroggyPics.NET_DOWNLOAD_PIC, sendBuf );
-			
+				if ( requesting.containsKey( player ) != true ) { requesting.put( player, new Stack< byte[] >() ); }
+				
+				requesting.get( player ).push( hash );
+				
 			} );
 			
 		} );
@@ -161,9 +161,41 @@ public class PicReceiverServer {
 		
 	}
 	
+	public void tick( MinecraftServer server ) {
+		
+		if ( server.getTicks() % 2 != 0 ) { return; }
+		
+		Iterator< HashMap.Entry< ServerPlayerEntity, Stack< byte[] > > > i = requesting.entrySet().iterator();
+		while( i.hasNext() == true ) {
+			
+			HashMap.Entry< ServerPlayerEntity, Stack< byte[] > > kv = i.next();
+			
+			ServerPlayerEntity player = kv.getKey();
+			if ( player.isDisconnected() == true ) { i.remove(); continue; }
+			
+			Stack< byte[] > stack = kv.getValue();
+			
+			byte[] hash = stack.pop();
+			if ( stack.empty() == true ) { i.remove(); }
+			
+			byte[] pic = FroggyPics.storageServer.getPic( hash, server );
+			if ( pic != null ) {
+				
+				PacketByteBuf sendBuf = PacketByteBufs.create();
+				sendBuf.writeBytes( hash );
+				sendBuf.writeByteArray( pic );
+				ServerPlayNetworking.send( player, FroggyPics.NET_DOWNLOAD_PIC, sendBuf );
+				
+			}
+			
+		}
+		
+	}
+	
 	public void clear() {
 		
 		uploading.clear();
+		requesting.clear();
 		
 	}
 

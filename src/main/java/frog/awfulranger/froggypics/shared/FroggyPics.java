@@ -7,6 +7,7 @@ import frog.awfulranger.froggypics.shared.item.EmptyPicItem;
 import frog.awfulranger.froggypics.shared.item.PicItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -16,8 +17,6 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -113,6 +112,12 @@ public class FroggyPics implements ModInitializer {
 		ServerLifecycleEvents.SERVER_STOPPED.register( ( server ) -> {
 			
 			receiverServer.clear();
+			
+		} );
+		
+		ServerTickEvents.END_SERVER_TICK.register( ( server ) -> {
+			
+			receiverServer.tick( server );
 			
 		} );
 		
