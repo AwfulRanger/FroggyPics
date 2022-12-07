@@ -10,7 +10,6 @@ import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
-import org.apache.commons.codec.binary.Hex;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.MemoryCacheImageInputStream;
@@ -18,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 
@@ -26,29 +26,29 @@ public class PicStorageClient {
 	
 	protected HashMap< String, NativeImageBackedTexture > textures = new HashMap<>();
 	protected HashMap< String, Identifier > ids = new HashMap<>();
-	protected HashMap< String, Boolean > pending = new HashMap<>();
+	protected HashMap< String, Integer > pending = new HashMap<>();
 	
 	public PicStorageClient() {}
 	
 	public void request( byte[] hash ) {
 		
-		String hex = Hex.encodeHexString( hash );
+		String hex = FroggyPics.encodeHex( hash );
 		
 		// Make sure picture isn't already downloading
-		if ( pending.getOrDefault( hex, false ) == true ) { return; }
+		if ( pending.getOrDefault( hex, 0 ) > 0 ) { return; }
 		
 		// Request download
 		PacketByteBuf buf = PacketByteBufs.create();
 		buf.writeBytes( hash );
 		ClientPlayNetworking.send( FroggyPics.NET_DOWNLOAD_PIC, buf );
 		
-		pending.put( hex, true );
+		pending.put( hex, 100 );
 		
 	}
 	
 	public NativeImageBackedTexture getTexture( byte[] hash ) {
 		
-		NativeImageBackedTexture texture = textures.get( Hex.encodeHexString( hash ) );
+		NativeImageBackedTexture texture = textures.get( FroggyPics.encodeHex( hash ) );
 		if ( texture != null ) { return texture; }
 		
 		request( hash );
@@ -59,7 +59,7 @@ public class PicStorageClient {
 	
 	public Identifier getIdentifier( byte[] hash ) {
 		
-		Identifier id = ids.get( Hex.encodeHexString( hash ) );
+		Identifier id = ids.get( FroggyPics.encodeHex( hash ) );
 		if ( id != null ) { return id; }
 		
 		request( hash );
@@ -107,7 +107,7 @@ public class PicStorageClient {
 		
 		NativeImageBackedTexture texture = new NativeImageBackedTexture( image );
 		
-		String hex = Hex.encodeHexString( hash );
+		String hex = FroggyPics.encodeHex( hash );
 		
 		Identifier id = new Identifier( FroggyPics.MOD_ID, "textures/pics/" + hex + ".jpg" );
 		
@@ -116,6 +116,22 @@ public class PicStorageClient {
 		textures.put( hex, texture );
 		ids.put( hex, id );
 		pending.remove( hex );
+		
+	}
+	
+	public void tick() {
+		
+		Iterator< HashMap.Entry< String, Integer > > i = pending.entrySet().iterator();
+		while( i.hasNext() == true ) {
+			
+			HashMap.Entry< String, Integer > kv = i.next();
+			
+			int val = kv.getValue();
+			if ( val <= 1 ) { i.remove(); continue; }
+			
+			kv.setValue( val - 1 );
+			
+		}
 		
 	}
 	

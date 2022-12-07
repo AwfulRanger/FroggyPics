@@ -68,6 +68,22 @@ public class FroggyPics implements ModInitializer {
 		
 	}
 	
+	public static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	public static String encodeHex( byte[] bytes ) {
+		
+		char[] str = new char[ bytes.length * 2 ];
+		
+		for ( int i = 0; i < bytes.length; i++ ) {
+		
+			str[ i * 2 ] = HEX[ ( bytes[ i ] & 0xF0 ) >>> 4 ];
+			str[ ( i * 2 ) + 1 ] = HEX[ bytes[ i ] & 0x0F ];
+		
+		}
+		
+		return new String( str );
+		
+	}
+	
 	@Override
 	public void onInitialize() {
 		

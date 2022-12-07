@@ -3,7 +3,6 @@ package frog.awfulranger.froggypics.server;
 import frog.awfulranger.froggypics.shared.FroggyPics;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.WorldSavePath;
-import org.apache.commons.codec.binary.Hex;
 import java.io.*;
 
 
@@ -14,7 +13,7 @@ public class PicStorageServer {
 	
 	public File getFile( byte[] hash, MinecraftServer server ) {
 		
-		return new File( server.getSavePath( WorldSavePath.ROOT ) + "/" + FroggyPics.MOD_ID, Hex.encodeHexString( hash ) + ".jpg" );
+		return new File( server.getSavePath( WorldSavePath.ROOT ) + "/" + FroggyPics.MOD_ID, FroggyPics.encodeHex( hash ) + ".jpg" );
 		
 	}
 	
