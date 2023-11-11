@@ -7,8 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
@@ -37,7 +36,7 @@ public class UploadScreen extends BaseScreen {
 	
 	public UploadScreen() {
 		
-		super( new TranslatableText( "gui." + FroggyPics.MOD_ID + ".upload" ), BG_TEXTURE, BG_W, BG_H );
+		super( Text.translatable( "gui." + FroggyPics.MOD_ID + ".upload" ), BG_TEXTURE, BG_W, BG_H );
 		
 	}
 	
@@ -47,14 +46,14 @@ public class UploadScreen extends BaseScreen {
 		int x = ( width - BG_W ) / 2;
 		int y = ( height - BG_H ) / 2;
 		
-		Label uuidLabel = new Label( textRenderer, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".imagepath" ), x + 5, y + 5, TEXT_COLOR );
+		Label uuidLabel = new Label( textRenderer, Text.translatable( "gui." + FroggyPics.MOD_ID + ".imagepath" ), x + 5, y + 5, TEXT_COLOR );
 		addDrawable( uuidLabel );
 		
 		pathInput = new TextFieldWidget( textRenderer, x + 5, y + 15, BG_W - 10, 20, null );
 		pathInput.setMaxLength( 256 );
 		addDrawableChild( pathInput );
 		
-		ButtonWidget openPath = new ButtonWidget( x + 5, y + 40, BG_W - 55, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".openpath" ), ( ButtonWidget widget ) -> {
+		ButtonWidget openPath = new ButtonWidget( x + 5, y + 40, BG_W - 55, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".openpath" ), ( ButtonWidget widget ) -> {
 			
 			synchronized ( this ) {
 				
@@ -64,7 +63,7 @@ public class UploadScreen extends BaseScreen {
 				
 			}
 			
-			String title = new TranslatableText( "gui." + FroggyPics.MOD_ID + ".upload" ).getString();
+			String title = Text.translatable( "gui." + FroggyPics.MOD_ID + ".upload" ).getString();
 			
 			new Thread( () -> {
 				
@@ -100,7 +99,7 @@ public class UploadScreen extends BaseScreen {
 		} );
 		addDrawableChild( openPath );
 		
-		ButtonWidget upload = new ButtonWidget( ( x + BG_W ) - 45, y + 40, 40, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".upload" ), ( ButtonWidget widget ) -> {
+		ButtonWidget upload = new ButtonWidget( ( x + BG_W ) - 45, y + 40, 40, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".upload" ), ( ButtonWidget widget ) -> {
 			
 			try {
 				
@@ -111,7 +110,7 @@ public class UploadScreen extends BaseScreen {
 			}
 			catch ( IOException e ) {
 				
-				client.setScreen( new MessageScreen( null, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), new LiteralText( e.getLocalizedMessage() ) ) );
+				client.setScreen( new MessageScreen( null, Text.translatable( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), Text.literal( e.getLocalizedMessage() ) ) );
 				
 				return;
 			

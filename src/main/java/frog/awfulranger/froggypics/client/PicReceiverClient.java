@@ -5,8 +5,7 @@ import frog.awfulranger.froggypics.shared.FroggyPics;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import java.io.IOException;
 
 
@@ -32,7 +31,7 @@ public class PicReceiverClient {
 							try { FroggyPicsClient.senderClient.sendData(); }
 							catch ( IOException e ) {
 								
-								client.setScreen( new MessageScreen( null, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), new LiteralText( e.getLocalizedMessage() ) ) );
+								client.setScreen( new MessageScreen( null, Text.translatable( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), Text.literal( e.getLocalizedMessage() ) ) );
 								
 								return;
 								
@@ -54,7 +53,7 @@ public class PicReceiverClient {
 						
 						FroggyPicsClient.senderClient = null;
 						
-						client.setScreen( new MessageScreen( null, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), new TranslatableText( "gui.froggypics.imagetoolarge" ) ) );
+						client.setScreen( new MessageScreen( null, Text.translatable( "gui." + FroggyPics.MOD_ID + ".invalidimage" ), Text.translatable( "gui.froggypics.imagetoolarge" ) ) );
 						
 						break;
 						

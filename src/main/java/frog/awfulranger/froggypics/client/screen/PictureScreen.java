@@ -13,7 +13,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -42,7 +42,7 @@ public class PictureScreen extends BaseScreen {
 	
 	public PictureScreen( PicEntity entity ) {
 		
-		super( new TranslatableText( "gui." + FroggyPics.MOD_ID + "pic" ), BG_TEXTURE, BG_W, BG_H );
+		super( Text.translatable( "gui." + FroggyPics.MOD_ID + "pic" ), BG_TEXTURE, BG_W, BG_H );
 		
 		this.entity = entity;
 		picIdentifier = entity.getPicIdentifier();
@@ -61,12 +61,12 @@ public class PictureScreen extends BaseScreen {
 		int cX = width / 2;
 		int cY = height / 2;
 		
-		Label uuidLabel = new Label( textRenderer, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".pic" ), ( cX - ( bgW / 2 ) ) + 5, ( cY - ( bgH / 2 ) ) + 5, TEXT_COLOR );
+		Label uuidLabel = new Label( textRenderer, Text.translatable( "gui." + FroggyPics.MOD_ID + ".pic" ), ( cX - ( bgW / 2 ) ) + 5, ( cY - ( bgH / 2 ) ) + 5, TEXT_COLOR );
 		addDrawable( uuidLabel );
 		
 		int maxSize = FroggyPics.getMaxPicEntitySize();
 		
-		ButtonWidget top = new ButtonWidget( cX - 10, ( cY - grid ) - 25, 20, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".uparrow" ), ( ButtonWidget widget ) -> {
+		ButtonWidget top = new ButtonWidget( cX - 10, ( cY - grid ) - 25, 20, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".uparrow" ), ( ButtonWidget widget ) -> {
 			
 			if ( sizeTop >= maxSize || entity == null ) { return; }
 			
@@ -87,7 +87,7 @@ public class PictureScreen extends BaseScreen {
 		} );
 		addDrawableChild( top );
 		
-		ButtonWidget bottom = new ButtonWidget( cX - 10, cY + grid + 5, 20, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".downarrow" ), ( ButtonWidget widget ) -> {
+		ButtonWidget bottom = new ButtonWidget( cX - 10, cY + grid + 5, 20, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".downarrow" ), ( ButtonWidget widget ) -> {
 			
 			if ( sizeBottom >= maxSize || entity == null ) { return; }
 			
@@ -108,7 +108,7 @@ public class PictureScreen extends BaseScreen {
 		} );
 		addDrawableChild( bottom );
 		
-		ButtonWidget left = new ButtonWidget( ( cX - grid ) - 25, cY - 10, 20, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".leftarrow" ), ( ButtonWidget widget ) -> {
+		ButtonWidget left = new ButtonWidget( ( cX - grid ) - 25, cY - 10, 20, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".leftarrow" ), ( ButtonWidget widget ) -> {
 			
 			if ( sizeLeft >= maxSize || entity == null ) { return; }
 			
@@ -129,7 +129,7 @@ public class PictureScreen extends BaseScreen {
 		} );
 		addDrawableChild( left );
 		
-		ButtonWidget right = new ButtonWidget( cX + grid + 5, cY - 10, 20, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".rightarrow" ), ( ButtonWidget widget ) -> {
+		ButtonWidget right = new ButtonWidget( cX + grid + 5, cY - 10, 20, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".rightarrow" ), ( ButtonWidget widget ) -> {
 			
 			if ( sizeRight >= maxSize || entity == null ) { return; }
 			
@@ -150,7 +150,7 @@ public class PictureScreen extends BaseScreen {
 		} );
 		addDrawableChild( right );
 		
-		ButtonWidget reset = new ButtonWidget( ( cX - ( bgW / 2 ) ) + 5, ( cY + ( bgH / 2 ) ) - 25, 40, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".reset" ), ( ButtonWidget widget ) -> {
+		ButtonWidget reset = new ButtonWidget( ( cX - ( bgW / 2 ) ) + 5, ( cY + ( bgH / 2 ) ) - 25, 40, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".reset" ), ( ButtonWidget widget ) -> {
 			
 			sizeTop = 0;
 			sizeBottom = 0;
@@ -160,7 +160,7 @@ public class PictureScreen extends BaseScreen {
 		} );
 		addDrawableChild( reset );
 		
-		ButtonWidget apply = new ButtonWidget( ( cX + ( bgW / 2 ) ) - 45, ( cY + ( bgH / 2 ) ) - 25, 40, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".apply" ), ( ButtonWidget widget ) -> {
+		ButtonWidget apply = new ButtonWidget( ( cX + ( bgW / 2 ) ) - 45, ( cY + ( bgH / 2 ) ) - 25, 40, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".apply" ), ( ButtonWidget widget ) -> {
 			
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeInt( entity.getId() );

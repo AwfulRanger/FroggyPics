@@ -6,7 +6,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 
@@ -43,7 +42,7 @@ public class MessageScreen extends BaseScreen {
 		Label messageLabel = new Label( textRenderer, message, x + 5, y + 25, TEXT_COLOR );
 		addDrawable( messageLabel );
 		
-		ButtonWidget ok = new ButtonWidget( ( x + BG_W ) - 45, y + 55, 40, 20, new TranslatableText( "gui." + FroggyPics.MOD_ID + ".ok" ), ( ButtonWidget widget ) -> {
+		ButtonWidget ok = new ButtonWidget( ( x + BG_W ) - 45, y + 55, 40, 20, Text.translatable( "gui." + FroggyPics.MOD_ID + ".ok" ), ( ButtonWidget widget ) -> {
 			
 			client.setScreen( parent );
 			
@@ -53,7 +52,9 @@ public class MessageScreen extends BaseScreen {
 	}
 	
 	@Override
-	public void onClose() {
+	public void close() {
+		
+		super.close();
 		
 		client.setScreen( parent );
 		

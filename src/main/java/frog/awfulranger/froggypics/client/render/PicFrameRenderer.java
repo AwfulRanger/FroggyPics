@@ -75,8 +75,8 @@ public class PicFrameRenderer extends EntityRenderer< PicEntity > {
 		float v2 = v1 + h;
 		
 		MatrixStack.Entry entry = matrices.peek();
-		Matrix4f mMat = entry.getModel();
-		Matrix3f nMat = entry.getNormal();
+		Matrix4f mMat = entry.getPositionMatrix();
+		Matrix3f nMat = entry.getNormalMatrix();
 		
 		VertexConsumer front = vertexConsumers.getBuffer( RenderLayer.getEntitySolid( picIdentifier ) );
 		// Front

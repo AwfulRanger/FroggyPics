@@ -1,5 +1,5 @@
 # FroggyPics
-Adds picture frames to Minecraft for players to upload images into (made for Minecraft version 1.17.1, requires Fabric)
+Adds picture frames to Minecraft for players to upload images into (made for Minecraft version 1.19, requires Fabric)
 
 Combine 8 paper with a lily pad to make 8 empty pictures, or combine paper with 3 kelp to make 1
 ![crafting](https://user-images.githubusercontent.com/10349312/198526631-4612c2d5-8853-42b0-b011-6386b1a2ac1f.png)

@@ -6,7 +6,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -33,13 +33,13 @@ public class PicSenderClient {
 	
 	public void sendRequest() throws IOException {
 		
-		if ( image == null ) { throw new IOException( new TranslatableText( "gui." + FroggyPics.MOD_ID + ".imagereadfail" ).getString() ); }
+		if ( image == null ) { throw new IOException( Text.translatable( "gui." + FroggyPics.MOD_ID + ".imagereadfail" ).getString() ); }
 		
 		// Clamp dimensions
 		int maxDim = FroggyPics.getMaxPicDim();
 		int w = image.getWidth();
 		int h = image.getHeight();
-		if ( w == 0 || h == 0 ) { throw new IOException( new TranslatableText( "gui." + FroggyPics.MOD_ID + ".invaliddim" ).getString() ); }
+		if ( w == 0 || h == 0 ) { throw new IOException( Text.translatable( "gui." + FroggyPics.MOD_ID + ".invaliddim" ).getString() ); }
 		if ( w > maxDim || h > maxDim ) {
 			
 			if ( w > h ) { h = ( int ) ( maxDim / ( ( float ) w / h ) ); w = maxDim; }
@@ -77,7 +77,7 @@ public class PicSenderClient {
 			
 		}
 		
-		if ( array.size() > FroggyPics.getMaxPicSize() ) { throw new IOException( new TranslatableText( "gui." + FroggyPics.MOD_ID + ".imagetoolarge" ).getString() ); }
+		if ( array.size() > FroggyPics.getMaxPicSize() ) { throw new IOException( Text.translatable( "gui." + FroggyPics.MOD_ID + ".imagetoolarge" ).getString() ); }
 		
 		bytes = array.toByteArray();
 		
@@ -90,7 +90,7 @@ public class PicSenderClient {
 	
 	public void sendData() throws IOException {
 		
-		if ( bytes == null ) { throw new IOException( new TranslatableText( "gui." + FroggyPics.MOD_ID + ".imagereadfail" ).getString() ); }
+		if ( bytes == null ) { throw new IOException( Text.translatable( "gui." + FroggyPics.MOD_ID + ".imagereadfail" ).getString() ); }
 		
 		int dataSize = FroggyPics.getMaxPicData();
 		for ( int i = 0; i < bytes.length; i += dataSize ) {

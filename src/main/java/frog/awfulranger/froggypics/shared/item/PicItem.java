@@ -16,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
@@ -87,9 +86,9 @@ public class PicItem extends Item {
 				matrices.translate( 0.0d, 0.2d, 0.0d );
 				matrices.scale( 0.5f, 0.5f, 0.5f );
 				
-			} else { entry.getNormal().multiply( Vec3f.POSITIVE_X.getDegreesQuaternion( -90 ) ); }
+			} else { entry.getNormalMatrix().multiply( Vec3f.POSITIVE_X.getDegreesQuaternion( -90 ) ); }
 			
-			entry.getModel().multiply( Vec3f.POSITIVE_Y.getDegreesQuaternion( 180 ) );
+			entry.getPositionMatrix().multiply( Vec3f.POSITIVE_Y.getDegreesQuaternion( 180 ) );
 			
 		}
 		
@@ -119,7 +118,7 @@ public class PicItem extends Item {
 			
 		} else { resolution = ""; }
 		
-		tooltip.add( new LiteralText( resolution + "(" + Hex.encodeHexString( pic ).substring( 0, 8 ) + ")" ).formatted( Formatting.DARK_GRAY ) );
+		tooltip.add( Text.literal( resolution + "(" + Hex.encodeHexString( pic ).substring( 0, 8 ) + ")" ).formatted( Formatting.DARK_GRAY ) );
 	
 	}
 	

@@ -50,7 +50,7 @@ public class BaseScreen extends Screen {
 	}
 	
 	@Override
-	public boolean isPauseScreen() { return false; }
+	public boolean shouldPause() { return false; }
 	
 	public class Label implements Drawable {
 		
